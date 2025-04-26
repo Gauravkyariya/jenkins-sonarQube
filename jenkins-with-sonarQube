@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('git') {
+            steps {
+               git 'https://github.com/CloudTechDevOps/simple-java-maven-app.git'
+            }
+        }
+        stage('clean') {
+            steps {
+               sh 'mvn clean'
+            }
+        }
+          stage('sonarQube') {
+            steps {
+               sh 'mvn sonar:sonar   -Dsonar.projectKey=maven   -Dsonar.host.url=http://3.110.117.125:9000   -Dsonar.login=c8c3fdcb9d27c87e6264ed790f944dc77a4ddc9c'  // These details taken from the sonarQube server.
+            }
+        }
+    }
+}
